@@ -16,3 +16,6 @@ matrix = [list(map(int, input().split())) for _ in range(n)] #Fazendo lista de l
 
 x, y = acharSabre(matrix, n, m)
 print(x, y)
+
+'''if (matrix[i][j] == 42 and matrix[i-1][j-1] == matrix[i-1][j] == matrix[i-1][j+1] == matrix[i][j-1] == matrix[i][j+1] == matrix[i+1][j-1] == matrix[i+1][j] == matrix[i+1][j+1] == 7): 
+    return i+1, j+1'''

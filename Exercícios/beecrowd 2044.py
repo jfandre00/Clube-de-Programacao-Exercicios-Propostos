@@ -27,4 +27,21 @@ while True:
     
     print(visits)
 
+"""
+
+Solução do professor em aula no dia 20-06-24
+n = int(input())
+while n != -1:
+    p = [int(num) for num in input().split()]
+    divida = 0
+    visitas = 0
+    for preco in p:
+        divida += preco
+        if divida % 100 == 0:
+            visitas += 1
+            debito = 0
     
+    print(visitas)
+    n = int(input())
+            
+"""
