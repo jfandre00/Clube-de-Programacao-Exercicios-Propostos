@@ -32,43 +32,7 @@ for _ in range(N): #uso _ pois é um contador simples
     # Imprime a matriz formatada, chamando a função
     print(formatacaoMatriz(listaQuadrados))
     
-    # Linha em branco entre as matrizes
-    print()
-    
-    x += 1
-
-############################### arrumar o esquema 
-
-
-def formatacaoMatriz(matriz):
-    # Calcula o comprimento máximo de cada coluna
-    comprimentoColunas = [max(len(str(matriz[i][j])) for i in range(len(matriz))) for j in range(len(matriz))]
-
-    linhasFormatadas = []
-    for linha in matriz:
-        # Formata cada valor para alinhar à direita
-        linha_a_formatar = ' '.join(f'{valor:>{comprimentoColunas[j]}}' for j, valor in enumerate(linha))
-        linhasFormatadas.append(linha_a_formatar)
-    
-    return '\n'.join(linhasFormatadas)
-
-x = 4
-N = int(input())  # Número de matrizes
-
-for _ in range(N):
-    M = int(input())  # Número de linhas e colunas da matriz
-    matrizCompleta = [list(map(int, input().split())) for _ in range(M)]
-    
-    # Calcula o quadrado de cada elemento da matriz
-    listaQuadrados = [[valor ** 2 for valor in linha] for linha in matrizCompleta]
-    
-    # Imprime o título da matriz
-    print(f'Quadrado da matriz #{x}:')
-    
-    # Imprime a matriz formatada, chamando a função
-    print(formatacaoMatriz(listaQuadrados))
-    
-    # Linha em branco entre as matrizes, mas não após a última
+    # Linha em branco entre as matrizes, mas não após a última (motivo do presentation error)
     if _ < N - 1:
         print()
     
