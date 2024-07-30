@@ -41,7 +41,7 @@ for _ in range(T): #vai rodar toda a função para cada caso T
 
     os_times = processar_caso(N, M, times, resultados)
     resultados_finais.extend(os_times)
-    #A funcao processar_caso vai retornar uma lista de resultados para cada caso T, já ordenado
+    #A função processar_caso vai retornar uma lista de resultados para cada caso T, já ordenado
     #a função extend vai adicionando a lista retornada de casa caso T (os_times) ao final da outra lista (resultados_finais), que irá mostrar tudo de uma vez na tela no fim do processo todo, conforme enunciado.
 
 # Imprime os resultados
