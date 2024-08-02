@@ -12,96 +12,65 @@ listaTotal = []
 
 listaTotal.append(lista0)
 listaTotal.append(lista1)
+listaTotal.append(lista2)
+listaTotal.append(lista3)
+listaTotal.append(lista4)
+listaTotal.append(lista5)
+listaTotal.append(lista6)
+listaTotal.append(lista7)
+listaTotal.append(lista8)
+
+'''
+for n in range(0,9):
+    lista = list(map(int, input().split()))
+    listaTotal.append(lista)
+
+'''
+l = 0
+lista_vertical = []
+
+while l < 9:
+    for i in range(0,9):
+        lista_vertical.append(listaTotal[i][l])
+            
+    listaTotal.append(lista_vertical)
+
+    lista_vertical = []
+    l += 1
+
+l = 0
+lista_interna = []
+contador = 0
+
+while contador < 9:
+    while l < (3 + contador):
+        for i in range(0,3):
+            lista_interna.append(listaTotal[i][l])
+        l += 1
+    listaTotal.append(lista_interna)
+    lista_interna = []
+    contador += 3
+  
+l = 0
+contador = 0
+while contador < 9:
+    while l < (3 + contador):
+        for i in range(3,6):
+            lista_interna.append(listaTotal[i][l])
+        l += 1
+    listaTotal.append(lista_interna)
+    lista_interna = []
+    contador += 3
+
+l = 0
+contador = 0
+while contador < 9:
+    while l < (3 + contador):
+        for i in range(6,9):
+            lista_interna.append(listaTotal[i][l])
+        l += 1
+    listaTotal.append(lista_interna)
+    lista_interna = []
+    contador += 3
+
 print(listaTotal)
-
-
-
-listaA = []
-listaB = []
-listaC = []
-listaD = []
-listaE = []
-listaF = []
-listaG = []
-listaH = []
-listaI = []
-
-listaH0 = []
-listaH1 = []
-listaH2 = []
-listaH3 = []
-listaH4 = []
-listaH5 = []
-listaH6 = []
-listaH7 = []
-listaH8 = []
-
-
-listaH0.append(lista0[0])
-listaH0.append(lista1[0])
-listaH0.append(lista2[0])
-listaH0.append(lista3[0])
-listaH0.append(lista4[0])
-listaH0.append(lista5[0])
-listaH0.append(lista6[0])
-listaH0.append(lista7[0])
-listaH0.append(lista8[0])
-
-
-for i in range(0,3):
-    listaA.append(lista0[i])
-    listaB.append(lista0[i+3])
-    listaC.append(lista0[i+6])
-    listaD.append(lista3[i])
-    listaE.append(lista3[i+3])
-    listaF.append(lista3[i+6])
-    listaG.append(lista6[i])
-    listaH.append(lista6[i+3])
-    listaI.append(lista6[i+6])
-
-for i in range(0,3):
-    listaA.append(lista1[i])
-    listaB.append(lista1[i+3])
-    listaC.append(lista1[i+6])
-    listaD.append(lista4[i])
-    listaE.append(lista4[i+3])
-    listaF.append(lista4[i+6])
-    listaG.append(lista7[i])
-    listaH.append(lista7[i+3])
-    listaI.append(lista7[i+6])
-
-for i in range(0,3):
-    listaA.append(lista2[i])
-    listaB.append(lista2[i+3])
-    listaC.append(lista2[i+6])
-    listaD.append(lista5[i])
-    listaE.append(lista5[i+3])
-    listaF.append(lista5[i+6])
-    listaG.append(lista8[i])
-    listaH.append(lista8[i+3])
-    listaI.append(lista8[i+6])
-
-
-
-#Fazer da lista0 até lista8 / da listaA até listaI
-if (1 and 2 and 3 and 4 and 5 and 6 and 7 and 8 and 9) in lista0:
-    verificacao_1 = True
-
-#Fazer da listaA até listaI
-if (1 and 2 and 3 and 4 and 5 and 6 and 7 and 8 and 9) in listaA:
-    verificacao_2 = True
-
-#Fazer da listaH0 até listaH8
-if (1 and 2 and 3 and 4 and 5 and 6 and 7 and 8 and 9) in listaH0:
-    verificacao_3 = True
-
-#Fazer a verificação da soma de todas as listas
-if sum(lista0) == 45:
-    print("Soma ok")
-
-
-
-if (verificacao_1 and verificacao_2 and verificacao_3) == True:
-    print("SIM")
-else:
-    print("NAO")
