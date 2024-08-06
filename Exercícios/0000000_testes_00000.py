@@ -1,49 +1,39 @@
-def verificar_sudoku(matriz):
-    listaTotal = []
-
-    for i in range(9):
-        listaTotal.append(matriz[i])
+def main():
+    import sys
+    input = sys.stdin.read
+    data = input().split()
     
-    # Verificação das linhas
-    for linha in listaTotal:
-        if set(linha) != set(range(1, 10)):
-            return False
-    
-    # Verificação das colunas
-    for l in range(9):
-        coluna = {listaTotal[i][l] for i in range(9)}
-        if coluna != set(range(1, 10)):
-            return False
+    index = 0
+    while True:
+        n = int(data[index])
+        index += 1
+        if n == 0:
+            break
+        
+        zero = 0
+        soma = 0
+        inicio = 0
+        postes = 0
+        
+        for _ in range(n):
+            numero = int(data[index])
+            index += 1
+            if numero == 0 and inicio == 0:
+                zero += 1
+                postes += 1
+            elif numero == 0 and inicio == 1:
+                postes += 1
+            if numero == 1:
+                inicio = 1
+                soma += postes // 2
+                postes = 0
+        
+        if postes > 0:
+            soma -= zero // 2
+            postes += zero
+            soma += postes // 2
+        
+        print(soma)
 
-    # Verificação dos sub-quadrantes 3x3
-    for range1 in range(0, 9, 3):
-        for contador in range(0, 9, 3):
-            sub_quadrante = {listaTotal[i][l] for i in range(range1, range1 + 3) for l in range(contador, contador + 3)}
-            if sub_quadrante != set(range(1, 10)):
-                return False
-
-    return True
-
-# Leitura de múltiplas instâncias
-n = int(input())
-instancias = []
-
-# Leitura de todas as instâncias
-for _ in range(n):
-    matriz = []
-    for _ in range(9):
-        linha = list(map(int, input().split()))
-        matriz.append(linha)
-    instancias.append(matriz)
-    if _ < n - 1:
-        input()  # Ler linha em branco entre instâncias
-
-# Processamento e impressão dos resultados
-for k, matriz in enumerate(instancias, start=1):
-    if verificar_sudoku(matriz):
-        print(f"Instancia {k}")
-        print("SIM")
-    else:
-        print(f"Instancia {k}")
-        print("NAO")
-    print()
+if __name__ == "__main__":
+    main()
