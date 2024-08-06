@@ -1,34 +1,17 @@
-def contar_postes_de_madeira(n, estados):
-    distancia_poste = 2  # 2 metros
-    comprimento_minimo_lacuna = 2  # pelo menos dois zeros para ser considerado, um zero só é descartado
-    
-    # Duplicar a lista p/ lidar com a circularidade
-    estados_dobrados = estados + estados
-    
-    lacunas = []
-    i = 0
-    while i < len(estados): #percorrendo a lista fornecida no input, só passa para baixo se encontrar o 1
-        if estados[i] == 1: #encontrando o numero 1, vai contar quantos zeros existem até o próximo 1
-            j = i + 1  #achou o 1, pula para o próximo e verifica se é zero
-            while j < len(estados_dobrados) and estados_dobrados[j] != 1: #para continuar percorrendo a lista dobrada 
-                j += 1
-            if j - i - 1 >= comprimento_minimo_lacuna: #para entrar na lista lacunas precisa ter mais do que 2 postes faltando
-                lacunas.append(j - i - 1) #número de zero entre dois números 1
-            i = j
-        else: 
-            i += 1
+import math
 
-    quantidade = 0
-    for lacuna in lacunas:
-        quantidade += lacuna // distancia_poste #a quantidade de postes de madeira necessários é a parte inteira da divisao pela distância de cada poste 
-
-    print(quantidade)
-
-# Exemplo de uso
-
-while True:
+n = int(input())
+while n > 0:
+    cerca = input().split()
+    postes = 0
+    bons = [i for i in range(n) if cerca [i] == "1"]
+    if len(bons) > 0:
+        for i in range(len(bons) - 1):
+            dist = bons[i +1] - bons[i]
+            postes += (dist - 1) // 2
+        dist = n - bons[-1] + bons[0]
+        postes += (dist -1) // 2
+    else:
+        postes += math.ceil(n/2)
+    print(postes)
     n = int(input())
-    if n == 0:
-        break
-    estados = list(map(int, input().split()))
-    contar_postes_de_madeira(n, estados)

@@ -32,15 +32,15 @@ def verificar_sudoku(matriz):
 n = int(input())
 instancias = []
 
-# Leitura de todas as instâncias
 for _ in range(n):
     matriz = []
     for _ in range(9):
-        linha = list(map(int, input().split()))
+        try:
+            linha = list(map(int, input().split()))
+        except EOFError:  #ficou dando esse erro no beecrowd, então fiz o tratamento.
+            pass
         matriz.append(linha)
     instancias.append(matriz)
-    if _ < n - 1:
-        input()  # Ler linha em branco entre instâncias
 
 # Processamento e impressão dos resultados
 for k, matriz in enumerate(instancias, start=1):
