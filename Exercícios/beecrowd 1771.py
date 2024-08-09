@@ -1,44 +1,58 @@
-def validar_cartela(cartela):
-    # Divide a cartela em colunas
-    b = cartela[0:5]
-    i = cartela[5:10]
-    n = cartela[10:15]
-    g = cartela[15:20]
-    o = cartela[20:25]
-    
-    # Define os intervalos para cada coluna
-    intervalos = {
-        'b': (1, 15),
-        'i': (16, 30),
-        'n': (31, 45),
-        'g': (46, 60),
-        'o': (61, 75)
-    }
-    
-    # Função para verificar se os números estão dentro do intervalo
-    def verificar_coluna(coluna, intervalo):
-        return all(intervalo[0] <= num <= intervalo[1] for num in coluna)
-    
-    # Verifica cada coluna
-    if (verificar_coluna(b, intervalos['b']) and
-        verificar_coluna(i, intervalos['i']) and
-        verificar_coluna(n, intervalos['n']) and
-        verificar_coluna(g, intervalos['g']) and
-        verificar_coluna(o, intervalos['o'])):
-        return "OK"
-    
-    # Se a cartela não for válida, tenta rearranjar
-    # Para simplificar, vamos assumir que não é possível rearranjar
-    # Você pode implementar a lógica de permutação aqui se necessário
-    return "DESCARTÁVEL"
-
-# Loop para leitura até EOF
 while True:
     try:
-        linha = input()
-        numeros = list(map(int, linha.split()))
+        contador = 0
 
-        resultado = validar_cartela(numeros)
-        print(resultado)
+        numeros = list(map(int, input().split()))
+
+        numeros.insert(12,0) #pois temos um valor que não é preenchido em linha 3 - "N"
+
+        B = []
+        I = []
+        N = []
+        G = []
+        O = []
+
+        for i in range(0, 21, 5):
+            B.append(numeros[i])
+            I.append(numeros[i+1])
+            N.append(numeros[i+2])
+            G.append(numeros[i+3])
+            O.append(numeros[i+4])
+
+        N.remove(0) #removendo o 0 já que os números estão corretamente separados agora
+
+        intervalos = {
+            'B': (1, 15),
+            'I': (16, 30),
+            'N': (31, 45),
+            'G': (46, 60),
+            'O': (61, 75) } #intervalos para cada coluna
+
+        # Verifica se todos os elementos estão no intervalo do dicionário acima
+        intervalo_B = all(intervalos['B'][0] <= x <= intervalos['B'][1] for x in B)
+        if intervalo_B == False:
+            contador += 1
+        intervalo_I = all(intervalos['I'][0] <= x <= intervalos['I'][1] for x in I)
+        if intervalo_I == False:
+            contador += 1
+        intervalo_N = all(intervalos['N'][0] <= x <= intervalos['N'][1] for x in N)
+        if intervalo_N == False:
+            contador += 1
+        intervalo_G = all(intervalos['G'][0] <= x <= intervalos['G'][1] for x in G)
+        if intervalo_G == False:
+            contador += 1
+        intervalo_O = all(intervalos['O'][0] <= x <= intervalos['O'][1] for x in O)
+        if intervalo_O == False:
+            contador += 1
+
+        if intervalo_B and intervalo_I and intervalo_N and intervalo_G and intervalo_O:
+            print("OK")
+
+        if contador % 2 == 0 and contador != 0:
+            print("RECICLAVEL")
+
+        if contador % 2 != 0 and contador != 0:
+            print("DESCARTAVEL")
+
     except EOFError:
         break
