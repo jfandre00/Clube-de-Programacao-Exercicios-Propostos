@@ -49,6 +49,8 @@ while True:
             print("OK")
 
         if contador % 2 == 0 and contador != 0:
+            #aqui preciso testar a permutação
+            print(permutas)
             print("RECICLAVEL")
 
         if contador % 2 != 0 and contador != 0:

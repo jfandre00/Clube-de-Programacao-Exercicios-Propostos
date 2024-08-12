@@ -4,7 +4,7 @@ while True:
         valores_fora_do_intervalo = [] 
         numeros = list(map(int, input().split()))
 
-        numeros.insert(12,0) #pois temos um valor que não é preenchido em linha 3 - "N"
+        numeros.insert(12, 0)  # Adiciona um valor que não é preenchido em linha 3 - "N"
 
         B = []
         I = []
@@ -19,18 +19,17 @@ while True:
             G.append(numeros[i+3])
             O.append(numeros[i+4])
 
-        N.remove(0) #removendo o 0 já que os números estão corretamente separados agora
+        N.remove(0)  # Remove o 0 já que os números estão corretamente separados agora
 
         intervalos = {
             'B': (1, 15),
             'I': (16, 30),
             'N': (31, 45),
             'G': (46, 60),
-            'O': (61, 75) } #intervalos para cada coluna
+            'O': (61, 75) }  # Intervalos para cada coluna
 
         # Verifica se todos os elementos estão no intervalo do dicionário acima
         todos_intervalos_ok = True
-
         letras = ['B', 'I', 'N', 'G', 'O']
 
         for letra in letras:
@@ -46,14 +45,22 @@ while True:
 
         if todos_intervalos_ok:
             print("OK")
+        else:
+            # Agrupa valores fora do intervalo por letra
+            valores_fora_por_letra = {letra: [] for letra in letras}
+            for x in valores_fora_do_intervalo:
+                for letra in letras:
+                    if intervalos[letra][0] <= x <= intervalos[letra][1]:
+                        valores_fora_por_letra[letra].append(x)
+                        break
 
-        if contador % 2 == 0 and contador != 0:
-            #preciso pegar a lista valores_fora_do_intervalo e verificar se os valores dentro dela pertencem a intervalos diferentes, que podem ser trocados. Por exemplo, se tiver um valor pertencente a B e outro a I, podemos trocar de lugar, mas caso tenhamos 2 valores pertencentes a mesma letra não tem como trocar, e a cartela seria descartavel.
-            
-            print("RECICLAVEL")
+            # Verifica se há valores em diferentes intervalos
+            intervalos_diferentes = sum(1 for valores in valores_fora_por_letra.values() if valores)
 
-        if contador % 2 != 0 and contador != 0:
-            print("DESCARTAVEL")
+            if intervalos_diferentes > 1:
+                print("RECICLAVEL")
+            else:
+                print("DESCARTAVEL")
 
     except EOFError:
         break
