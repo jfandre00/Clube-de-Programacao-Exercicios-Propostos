@@ -1,66 +1,28 @@
-while True:
-    try:
-        contador = 0
-        valores_fora_do_intervalo = [] 
-        numeros = list(map(int, input().split()))
+#beecrowd 1771
 
-        numeros.insert(12, 0)  # Adiciona um valor que não é preenchido em linha 3 - "N"
+#coluna letra B faixa 1 a 15, I 16 a 30, N 31 a 45, G 46 a 60, O 61 a 75
 
-        B = []
-        I = []
-        N = []
-        G = []
-        O = []
+#OK se a cartela for válida
+#Reciclavel se houver permutação possível
+#Descartavel se não existir permutação
 
-        for i in range(0, 21, 5):
-            B.append(numeros[i])
-            I.append(numeros[i+1])
-            N.append(numeros[i+2])
-            G.append(numeros[i+3])
-            O.append(numeros[i+4])
+#1. verificar se está ok
+#2. se não, como verificar se é possível transformar
+#uma cartela que não é vá
 
-        N.remove(0)  # Remove o 0 já que os números estão corretamente separados agora
+#Eu verifiquei a quantidade de números que estão em cada letra, e vi se para cada letra tinha 5 numero - Patricia que acertou disse
 
-        intervalos = {
-            'B': (1, 15),
-            'I': (16, 30),
-            'N': (31, 45),
-            'G': (46, 60),
-            'O': (61, 75) }  # Intervalos para cada coluna
 
-        # Verifica se todos os elementos estão no intervalo do dicionário acima
-        todos_intervalos_ok = True
-        letras = ['B', 'I', 'N', 'G', 'O']
+#temos que ter 5 numeros B (1 a 15) I G O
+#temos que ter 4 na faixa N 
+#contamos quantos valores tem em cada faixa, e se tem exatamente essas quantidades de valores podemos transformar
+# em reciclável
+#inserir na posicao do indio algum valor entre 31 a 45,l pois podemos ai tratar essa coluna como outra qualquer
 
-        for letra in letras:
-            intervalo = all(intervalos[letra][0] <= x <= intervalos[letra][1] for x in globals()[letra])
 
-            if not intervalo:
-                todos_intervalos_ok = False
-                for x in globals()[letra]:
-                    if not (intervalos[letra][0] <= x <= intervalos[letra][1]):
-                        valores_fora_do_intervalo.append(x)
-
-                contador += 1
-
-        if todos_intervalos_ok:
-            print("OK")
-        else:
-            # Agrupa valores fora do intervalo por letra
-            valores_fora_por_letra = {letra: [] for letra in letras}
-            for x in valores_fora_do_intervalo:
-                for letra in letras:
-                    if intervalos[letra][0] <= x <= intervalos[letra][1]:
-                        valores_fora_por_letra[letra].append(x)
-                        break
-
-            # Verifica se há valores em diferentes intervalos
-            intervalos_diferentes = sum(1 for valores in valores_fora_por_letra.values() if valores)
-
-            if intervalos_diferentes > 1:
-                print("RECICLAVEL")
-            else:
-                print("DESCARTAVEL")
-
-    except EOFError:
-        break
+'''Explicação do código do professor
+insert(12,31) coloca um numero que está no intervalo correto na posição do índio, resolvendo esse primeiro problema
+no caso dos 3 loops um dentro do outro:
+laço externo - indice inicial
+laço interno - pula de 5 em 5, pega os valores B I N G O
+if (cartela[i] -1) // 15 - se o intervalo é coluna B - essa conta tem que dar zero, no I é 1 e assim por diante - um numero entre 1 e 15 dividido por 15 - 1 vai ser zero, correto?'''
