@@ -1,59 +1,38 @@
-while True:
-    try:
-        contador = 0
-        valores_fora_do_intervalo = [] 
-        numeros = list(map(int, input().split()))
+def rank_teams(C, N, submissions):
+    from collections import defaultdict
+    
+    # Informações das equipes
+    teams = defaultdict(lambda: {'solved': 0, 'time': 0, 'problems': defaultdict(list)})
+    
+    # Processamento das submissões
+    for ci, pi, ti, ri in submissions:
+        teams[ci]['problems'][pi].append((ti, ri))
+    
+    # Cálculo dos tempos e problemas resolvidos
+    for team in teams:
+        for problem in teams[team]['problems']:
+            attempts = sorted(teams[team]['problems'][problem])  # Ordena tentativas pelo tempo
+            time_penalty = 0
+            solved = False
+            for time, result in attempts:
+                if result == 1:  # Aceito
+                    teams[team]['solved'] += 1
+                    teams[team]['time'] += time + time_penalty
+                    solved = True
+                    break
+                else:  # Rejeitado
+                    time_penalty += 1200  # 20 minutos (1200 segundos)
+    
+    # Ordenação das equipes conforme as regras
+    sorted_teams = sorted(teams.items(), key=lambda x: (-x[1]['solved'], x[1]['time'], x[0]))
+    
+    # Retorno dos times ordenados
+    return [team[0] for team in sorted_teams]
 
-        numeros.insert(12,0) #pois temos um valor que não é preenchido em linha 3 - "N"
+# Leitura de dados de entrada
+C, N = map(int, input().split())
+submissions = [tuple(map(int, input().split())) for _ in range(N)]
 
-        B = []
-        I = []
-        N = []
-        G = []
-        O = []
-
-        for i in range(0, 21, 5):
-            B.append(numeros[i])
-            I.append(numeros[i+1])
-            N.append(numeros[i+2])
-            G.append(numeros[i+3])
-            O.append(numeros[i+4])
-
-        N.remove(0) #removendo o 0 já que os números estão corretamente separados agora
-
-        intervalos = {
-            'B': (1, 15),
-            'I': (16, 30),
-            'N': (31, 45),
-            'G': (46, 60),
-            'O': (61, 75) } #intervalos para cada coluna
-
-        # Verifica se todos os elementos estão no intervalo do dicionário acima
-        todos_intervalos_ok = True
-
-        letras = ['B', 'I', 'N', 'G', 'O']
-
-        for letra in letras:
-            intervalo = all(intervalos[letra][0] <= x <= intervalos[letra][1] for x in globals()[letra])
-
-            if not intervalo:
-                todos_intervalos_ok = False
-                for x in globals()[letra]:
-                    if not (intervalos[letra][0] <= x <= intervalos[letra][1]):
-                        valores_fora_do_intervalo.append(x)
-
-                contador += 1
-
-        if todos_intervalos_ok:
-            print("OK")
-
-        if contador % 2 == 0 and contador != 0:
-            #preciso pegar a lista valores_fora_do_intervalo e verificar se os valores dentro dela pertencem a intervalos diferentes, que podem ser trocados. Por exemplo, se tiver um valor pertencente a B e outro a I, podemos trocar de lugar, mas caso tenhamos 2 valores pertencentes a mesma letra não tem como trocar, e a cartela seria descartavel.
-            
-            print("RECICLAVEL")
-
-        if contador % 2 != 0 and contador != 0:
-            print("DESCARTAVEL")
-
-    except EOFError:
-        break
+# Calculando e imprimindo a classificação
+ranking = rank_teams(C, N, submissions)
+print(" ".join(map(str, ranking)))
