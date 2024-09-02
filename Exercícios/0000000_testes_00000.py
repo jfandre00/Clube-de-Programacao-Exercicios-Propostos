@@ -1,38 +1,28 @@
-def rank_teams(C, N, submissions):
-    from collections import defaultdict
-    
-    # Informações das equipes
-    teams = defaultdict(lambda: {'solved': 0, 'time': 0, 'problems': defaultdict(list)})
-    
-    # Processamento das submissões
-    for ci, pi, ti, ri in submissions:
-        teams[ci]['problems'][pi].append((ti, ri))
-    
-    # Cálculo dos tempos e problemas resolvidos
-    for team in teams:
-        for problem in teams[team]['problems']:
-            attempts = sorted(teams[team]['problems'][problem])  # Ordena tentativas pelo tempo
-            time_penalty = 0
-            solved = False
-            for time, result in attempts:
-                if result == 1:  # Aceito
-                    teams[team]['solved'] += 1
-                    teams[team]['time'] += time + time_penalty
-                    solved = True
-                    break
-                else:  # Rejeitado
-                    time_penalty += 1200  # 20 minutos (1200 segundos)
-    
-    # Ordenação das equipes conforme as regras
-    sorted_teams = sorted(teams.items(), key=lambda x: (-x[1]['solved'], x[1]['time'], x[0]))
-    
-    # Retorno dos times ordenados
-    return [team[0] for team in sorted_teams]
-
-# Leitura de dados de entrada
+# Leitura dos valores de entrada
 C, N = map(int, input().split())
-submissions = [tuple(map(int, input().split())) for _ in range(N)]
 
-# Calculando e imprimindo a classificação
-ranking = rank_teams(C, N, submissions)
-print(" ".join(map(str, ranking)))
+# Inicializar a estrutura de dados para armazenar informações dos times
+times = {i: {'resolvidos': 0, 'tempo_total': 0, 'submissoes': {}} for i in range(1, C+1)}
+
+# Processar cada submissão
+for _ in range(N):
+    ci, pi, ti, ri = map(int, input().split())
+    if pi not in times[ci]['submissoes']:
+        times[ci]['submissoes'][pi] = {'aceito': False, 'tempo_primeira_aceita': 0, 'tentativas_rejeitadas': 0}
+    
+    if ri == 1:  # Submissão aceita
+        if not times[ci]['submissoes'][pi]['aceito']:
+            times[ci]['submissoes'][pi]['aceito'] = True
+            times[ci]['submissoes'][pi]['tempo_primeira_aceita'] = ti
+            times[ci]['resolvidos'] += 1
+            times[ci]['tempo_total'] += ti + 20 * times[ci]['submissoes'][pi]['tentativas_rejeitadas']
+    else:  # Submissão rejeitada
+        if not times[ci]['submissoes'][pi]['aceito']:
+            times[ci]['submissoes'][pi]['tentativas_rejeitadas'] += 1
+
+# Ordenar os times de acordo com as regras
+rank = sorted(times.keys(), key=lambda x: (times[x]['resolvidos'], times[x]['tempo_total'], x))
+
+# Imprimir os números dos times na ordem correta
+for team in rank:
+    print(team, end=' ')

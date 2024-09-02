@@ -1,28 +1,33 @@
-#beecrowd 1771
+# Leitura dos valores de entrada
+C, N = map(int, input().split())
 
-#coluna letra B faixa 1 a 15, I 16 a 30, N 31 a 45, G 46 a 60, O 61 a 75
+# Inicializar a estrutura de dados para armazenar informações dos times
+times = {i: {'resolvidos': 0, 'tempo_total': 0, 'submissoes': {}} for i in range(1, C+1)}
 
-#OK se a cartela for válida
-#Reciclavel se houver permutação possível
-#Descartavel se não existir permutação
+# Função para processar uma submissão
+def processar_submissao(ci, pi, ti, ri):
+    if pi not in times[ci]['submissoes']:
+        times[ci]['submissoes'][pi] = {'aceito': False, 'tempo_primeira_aceita': 0, 'tentativas_rejeitadas': 0}
+    
+    problema = times[ci]['submissoes'][pi]
+    
+    if ri == 1:  # Submissão aceita
+        if not problema['aceito']:
+            problema['aceito'] = True
+            problema['tempo_primeira_aceita'] = ti
+            times[ci]['resolvidos'] += 1
+            times[ci]['tempo_total'] += ti + 20 * problema['tentativas_rejeitadas']
+    else:  # Submissão rejeitada
+        if not problema['aceito']:
+            problema['tentativas_rejeitadas'] += 1
 
-#1. verificar se está ok
-#2. se não, como verificar se é possível transformar
-#uma cartela que não é vá
+# Processar cada submissão
+for _ in range(N):
+    ci, pi, ti, ri = map(int, input().split())
+    processar_submissao(ci, pi, ti, ri)
 
-#Eu verifiquei a quantidade de números que estão em cada letra, e vi se para cada letra tinha 5 numero - Patricia que acertou disse
+# Ordenar os times de acordo com as regras
+rank = sorted(times.keys(), key=lambda x: (-times[x]['resolvidos'], times[x]['tempo_total'], x))
 
-
-#temos que ter 5 numeros B (1 a 15) I G O
-#temos que ter 4 na faixa N 
-#contamos quantos valores tem em cada faixa, e se tem exatamente essas quantidades de valores podemos transformar
-# em reciclável
-#inserir na posicao do indio algum valor entre 31 a 45,l pois podemos ai tratar essa coluna como outra qualquer
-
-
-'''Explicação do código do professor
-insert(12,31) coloca um numero que está no intervalo correto na posição do índio, resolvendo esse primeiro problema
-no caso dos 3 loops um dentro do outro:
-laço externo - indice inicial
-laço interno - pula de 5 em 5, pega os valores B I N G O
-if (cartela[i] -1) // 15 - se o intervalo é coluna B - essa conta tem que dar zero, no I é 1 e assim por diante - um numero entre 1 e 15 dividido por 15 - 1 vai ser zero, correto?'''
+# Imprimir os números dos times na ordem correta
+print(' '.join(map(str, rank)))
