@@ -1,28 +1,37 @@
-# Leitura dos valores de entrada
+def rank_teams(C, N, runs):
+    #Dicionário para armazenar o tempo total e problemas resolvidos para cada time
+    total_time = {i: 0 for i in range(1, C+1)}
+    problems_solved = {i: 0 for i in range(1, C+1)}
+    problem_status = {i: {} for i in range(1, C+1)}
+
+    for ci, pi, ti, ri in runs:
+        if pi not in problem_status[ci]:
+            problem_status[ci][pi] = {'attempts': 0, 'solved': False, 'time': 0}
+
+        if not problem_status[ci][pi]['solved']:
+            if ri == 1:  # Se o problema é aceito
+                problems_solved[ci] += 1
+                #O tempo que levou é o tempo atual mais 20 minutos (1200 segundos) por tentativa errada
+                problem_status[ci][pi]['time'] = ti + problem_status[ci][pi]['attempts'] * 1200
+                total_time[ci] += problem_status[ci][pi]['time']
+                problem_status[ci][pi]['solved'] = True
+            else:  # Se o problema é rejeitado
+                problem_status[ci][pi]['attempts'] += 1
+
+    # Fazer a lista para ordenar os times
+    teams = [(ci, problems_solved[ci], total_time[ci]) for ci in range(1, C+1)]
+
+    # Ordenar os times pelo número de problemas resolvidos (decrescente), depois pelo tempo total (crescente), depois pelo número do time
+    teams.sort(key=lambda x: (-x[1], x[2], x[0]))
+
+    # Extrair os números dos times ordenados
+    result = [team[0] for team in teams]
+    return result
+
+# Leitura da entrada
 C, N = map(int, input().split())
+runs = [tuple(map(int, input().split())) for _ in range(N)]
 
-# Inicializar a estrutura de dados para armazenar informações dos times
-times = {i: {'resolvidos': 0, 'tempo_total': 0, 'submissoes': {}} for i in range(1, C+1)}
-
-# Processar cada submissão
-for _ in range(N):
-    ci, pi, ti, ri = map(int, input().split())
-    if pi not in times[ci]['submissoes']:
-        times[ci]['submissoes'][pi] = {'aceito': False, 'tempo_primeira_aceita': 0, 'tentativas_rejeitadas': 0}
-    
-    if ri == 1:  # Submissão aceita
-        if not times[ci]['submissoes'][pi]['aceito']:
-            times[ci]['submissoes'][pi]['aceito'] = True
-            times[ci]['submissoes'][pi]['tempo_primeira_aceita'] = ti
-            times[ci]['resolvidos'] += 1
-            times[ci]['tempo_total'] += ti + 20 * times[ci]['submissoes'][pi]['tentativas_rejeitadas']
-    else:  # Submissão rejeitada
-        if not times[ci]['submissoes'][pi]['aceito']:
-            times[ci]['submissoes'][pi]['tentativas_rejeitadas'] += 1
-
-# Ordenar os times de acordo com as regras
-rank = sorted(times.keys(), key=lambda x: (times[x]['resolvidos'], times[x]['tempo_total'], x))
-
-# Imprimir os números dos times na ordem correta
-for team in rank:
-    print(team, end=' ')
+# Chama a função e imprime o resultado
+result = rank_teams(C, N, runs)
+print(" ".join(map(str, result)))
