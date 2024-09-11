@@ -1,3 +1,5 @@
+#Pilha é LIFO - last in first out
+
 class Pilha(object):
     #Implementa o tipo abstrato de dados Pilha
     def __init__(self):
