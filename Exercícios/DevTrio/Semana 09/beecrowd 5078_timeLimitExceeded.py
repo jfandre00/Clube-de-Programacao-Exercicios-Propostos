@@ -1,3 +1,5 @@
+#beecrowd 5078 - time limit exceeded
+
 def main():
     n = int(input())  # numero de lojas
     x = list(map(int, input().split()))  # precos das n lojas
