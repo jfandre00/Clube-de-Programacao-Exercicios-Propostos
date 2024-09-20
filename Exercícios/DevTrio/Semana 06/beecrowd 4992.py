@@ -4,7 +4,7 @@ def rank_teams(C, N, runs):
     problems_solved = {i: 0 for i in range(1, C+1)}
     problem_status = {i: {} for i in range(1, C+1)}
 
-    for ci, pi, ti, ri in runs:
+    for ci, pi, ti, ri in runs: #ci = team number, pi = problem number, ti = submission time, ri = result (1 accepted, 0 rejected)
         if pi not in problem_status[ci]:
             problem_status[ci][pi] = {'attempts': 0, 'solved': False, 'time': 0}
 
