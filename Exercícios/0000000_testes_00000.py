@@ -1,16 +1,24 @@
-def main():
-    n = int(input())  # numero de lojas
-    x = list(map(int, input().split()))  # precos das n lojas
-    q = int(input())  # total de dias
+def mount_marathon(n, cartas):
+    pilhaDeCartas = cartas[:] 
 
-    # Para cada dia, calcular o número de lojas e imprimir o resultado
-    for _ in range(q):
-        m = int(input())  # quanto que pode gastar no dia
-        contador = 0
-        for preco in x:
-            if preco <= m:
-                contador += 1
-        print(contador)
+    while True:
+        movido = False  
+        i = 0
+        
+        while i < len(pilhaDeCartas) - 1:
+            if pilhaDeCartas[i] >= pilhaDeCartas[i + 1]:
+                pilhaDeCartas[i + 1] = pilhaDeCartas[i]
+                pilhaDeCartas.pop(i)
+                movido = True  
+            else:
+                i += 1  
+        
+        if not movido:
+            break  
 
-if __name__ == '__main__':
-    main()
+    return len(pilhaDeCartas)
+
+n = int(input()) 
+cartas = list(map(int, input().split()))  
+
+print(mount_marathon(n, cartas))
