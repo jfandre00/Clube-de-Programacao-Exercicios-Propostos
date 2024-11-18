@@ -1,0 +1,40 @@
+Explicação dos Tipos
+Força Bruta: #5449
+
+Verifica todas as combinações possíveis de pares.
+Simples, mas ineficiente.
+
+Assim que encontra a solução para o programa imediatamente.
+
+----------------------------------------------------------------------------------
+
+
+Intermediária: #5443
+
+Usa uma abordagem de ordenação e busca para melhorar o desempenho sem exigir muita memória adicional.
+Combina ideias de eficiência e simplicidade relativa.
+
+Ordenação do array:
+
+O array é transformado em uma lista de tuplas (valor, índice) para preservar os índices originais.
+Ordenar o array leva O(nlogn)
+Busca binária para cada elemento:
+
+Para cada número, calculamos o complemento necessário (alvo−num1).
+Usamos busca binária para procurar o complemento no restante do array ordenado.
+Formatação da saída:
+
+Garantimos que os índices sejam retornados em ordem crescente.
+
+----------------------------------------------------------------------------------
+Otimizado: #5450
+
+Alavanca estruturas de dados como dicionários para encontrar soluções em tempo linear.
+Melhor escolha para desempenho, mas exige mais memória.
+
+
+Para cada número no array, verificamos se o complemento necessário (ou seja, alvo - numero) já foi registrado no dicionário.
+Se encontrado, retornamos os índices diretamente.
+Se o complemento ainda não foi encontrado, o número atual e seu índice são adicionados ao dicionário.
+Parada imediata:
+Assim que encontramos o par, usamos exit() para encerrar o programa, garantindo eficiência.
