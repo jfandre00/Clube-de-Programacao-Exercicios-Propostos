@@ -1,6 +1,8 @@
 #Solução para até 200.000 elementos
 #complexidade O(nlogn)  
 
+#Busca binária, que precisa de um array ordenado
+
 entrada = input().strip("[]").split(",")
 entrada = [int(i) for i in entrada]
 alvo = int(input())
