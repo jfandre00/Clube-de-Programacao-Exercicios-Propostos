@@ -19,3 +19,5 @@ while n != 0:
             print(alternativas[alternativas_marcadas[0]])
         else:
             print('*')
+    n = int(input()) # lê o próximo número de provas
+# o loop continua até que n seja 0, que é o sinal de parada do programa.
