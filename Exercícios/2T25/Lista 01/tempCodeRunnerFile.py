@@ -1,0 +1,2 @@
+
+        somaNotas += notas[j]
