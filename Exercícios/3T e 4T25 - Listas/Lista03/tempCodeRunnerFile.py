@@ -1,0 +1,1 @@
+armadilha1, armadilha2, armadilha3 = (int(x) for x in input().split())
