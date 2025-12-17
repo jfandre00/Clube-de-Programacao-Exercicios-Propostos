@@ -12,12 +12,12 @@ capitals = {'USA':'Washington DC',
 print(capitals.get('Japan'))
 
 if capitals.get('Japan') == None:
-    print('That capital existis')
+    print('That capital exists')
 else:
     print("That capital doesn't exist")
 
 if capitals.get('Brazil') == None:
-    print('That capital existis')
+    print('That capital exists')
 else:
     print("That capital doesn't exist")
 
